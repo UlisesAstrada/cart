@@ -40,34 +40,54 @@
 
 
 //renderizar elementos de un array como li usando JS!
-const elementos = ['primero', 'segundo', 'tercero']
 
 //usando textContent con forEach
 
 // elementos.forEach(item => {
-//   console.log(item);
-//   const li = document.createElement('li')
-//   li.textContent = item;
-//   lista.appendChild(li)
-// })
+  //   console.log(item);
+  //   const li = document.createElement('li')
+  //   li.textContent = item;
+  //   lista.appendChild(li)
+  // })
+  
+  // //usando innerHTML con forEach
+  // elementos.forEach(item => {
+    //   lista.innerHTML += `<li>${item}</li>`
+    // })
+    
+    //Los métodos anteriores tienen un problema, el Reflow, esto es que todos los componentes de la página se tienen que renderizar nuevamente desde 0 cada vez que hay un cambio
+    
+    //Fragment soluciona el Reflow
+    
+  const lista = document.getElementById('lista')
+  
+  const elementos = ['primero', 'segundo', 'tercero']
+  
+  //hay dos formas de crear Fragments
 
-// //usando innerHTML con forEach
-// elementos.forEach(item => {
-//   lista.innerHTML += `<li>${item}</li>`
-// })
-
-//Los métodos anteriores tienen un problema, el Reflow, esto es que todos los componentes de la página se tienen que renderizar nuevamente desde 0 cada vez que hay un cambio
-
-//Fragment soluciona el Reflow
+  // const fragment = new DocumentFragment()
+  const fragment = document.createDocumentFragment()
+  
+//ahora usamos fragment para el forEach()
 
 
+elementos.forEach(item => {
+  const li = document.createElement('li')
 
+  li.textContent = item
 
+  fragment.appendChild(li)
 
+})
 
-
-
-
+//recién acá renderizamos 
+lista.appendChild(fragment)
+  
+    
+    
+    
+    
+    
 
 
 
