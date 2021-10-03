@@ -59,36 +59,78 @@
     
     //Fragment soluciona el Reflow
     
-  const lista = document.getElementById('lista')
+  // const lista = document.getElementById('lista')
   
-  const elementos = ['primero', 'segundo', 'tercero']
+  // const elementos = ['primero', 'segundo', 'tercero']
   
   //hay dos formas de crear Fragments
 
   // const fragment = new DocumentFragment()
-  const fragment = document.createDocumentFragment()
+  // const fragment = document.createDocumentFragment()
   
 //ahora usamos fragment para el forEach()
 
 
-elementos.forEach(item => {
-  const li = document.createElement('li')
+// elementos.forEach(item => {
+//   const li = document.createElement('li')
 
-  li.textContent = item
+//   li.textContent = item
 
-  fragment.appendChild(li)
+//   fragment.appendChild(li)
 
-})
+// })
 
 //recién acá renderizamos 
-lista.appendChild(fragment)
+// lista.appendChild(fragment)
   
-    
-    
-    
-    
-    
+  
+//template vs innerHTML vs createElement
 
 
+//Esto es con createElement!
+
+// const lista = document.getElementById('lista')
+ 
+// const items = [1,2,3,4,5]
+  
+// const fragment = document.createDocumentFragment()
+
+// items.forEach( item => {
+//   const li = document.createElement('li')
+//   li.classList.add('list')
+  
+//   const b = document.createElement('b')
+//   b.textContent = 'Nombre: '
+//   li.appendChild(b)
+
+//   const span = document.createElement('span')
+//   span.classList.add('text-danger')
+//   span.textContent = item
+//   li.appendChild(span)
+
+//   fragment.appendChild(li)
+// })
+
+// lista.appendChild(fragment)
+
+//Da este resultado
+
+// <li class="list">
+//   <b>Nombre: </b> <span class="text-danger">description...</span>
+// </li>
 
 
+//Mismo resultado con innerHTML
+const lista = document.getElementById('lista')
+const items = [1,2,3,4,5,6]
+
+let fragment = ""
+
+items.forEach(item => {
+  fragment += `
+  <li class="list">
+    <b>Nombre: </b> <span class="text-danger">${item}</span>
+  </li>` 
+})
+
+lista.innerHTML = fragment  
