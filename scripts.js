@@ -82,73 +82,6 @@
 
 //recién acá renderizamos 
 // lista.appendChild(fragment)
-<<<<<<< HEAD
-
-
-
-//esto se hace con createElement
-
-// const lista = document.getElementById('lista')
-
-const arrayList = [1,2,3,4,5,6]
-
-// const fragment = document.createDocumentFragment()
-
-// arrayList.forEach(item => {
-//   const li = document.createElement('li')
-
-//   li.classList.add('list')
-
-//   const b = document.createElement('b')
-
-//   b.textContent = "Nombre: "
-
-//   li.appendChild(b)
-
-//   const span = document.createElement('span')
-
-//   span.classList.add('text-danger')
-//   span.textContent = item
-//   li.appendChild(span)
-
-//   fragment.appendChild(li)
-
-// })
-
-// lista.appendChild(fragment)
-
-
-//ahora usamos innerHTML
-
-// let fragment = ""
-
-// arrayList.forEach(item => {
-//   fragment += `
-//     <li class="list">
-//       <b>Nombre: </b> <span class="text-danger">${item}</span>
-//     </li>
-//   `
-// })
-
-// lista.innerHTML = fragment
-
-
-//el tercer método es el que hay que utilizar
-
-
-const template = document.getElementById('template')
-
-const fragment = document.createDocumentFragment()
-
-arrayList.forEach(item => {
-  template.querySelector('.list span').textContent = item
-
-  const clone = template.cloneNode(true)
-
-  fragment.appendChild(clone)
-
-})
-=======
   
   
 //template vs innerHTML vs createElement
@@ -161,7 +94,6 @@ arrayList.forEach(item => {
 // const items = [1,2,3,4,5]
   
 // const fragment = document.createDocumentFragment()
->>>>>>> 20e6f003d31853459d47efeaa0ff7aca57a4dbb2
 
 // items.forEach( item => {
 //   const li = document.createElement('li')
@@ -189,20 +121,38 @@ arrayList.forEach(item => {
 
 
 //Mismo resultado con innerHTML
-const lista = document.getElementById('lista')
-const items = [1,2,3,4,5,6]
+// const lista = document.getElementById('lista')
+// const items = [1,2,3,4,5,6]
 
-let fragment = ""
+// let fragment = ""
 
-items.forEach(item => {
-  fragment += `
-  <li class="list">
-    <b>Nombre: </b> <span class="text-danger">${item}</span>
-  </li>` 
+// items.forEach(item => {
+//   fragment += `
+//   <li class="list">
+//     <b>Nombre: </b> <span class="text-danger">${item}</span>
+//   </li>` 
+// })
+
+// lista.innerHTML = fragment  
+
+
+//ahora usamos template (esta es la opción correcta)
+
+const lista = document.querySelector('#lista')
+
+const arrayLista = [1,2,3,4,5,6]
+
+const template = document.querySelector('#template').content
+
+const fragment = document.createDocumentFragment()
+
+arrayLista.forEach(item => {
+  template.querySelector('.list span').textContent = item
+
+  const clone = template.cloneNode(true)
+
+  fragment.appendChild(clone)
+
 })
 
-<<<<<<< HEAD
 lista.appendChild(fragment)
-=======
-lista.innerHTML = fragment  
->>>>>>> 20e6f003d31853459d47efeaa0ff7aca57a4dbb2
