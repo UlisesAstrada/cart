@@ -61,32 +61,92 @@
     
   const lista = document.getElementById('lista')
   
-  const elementos = ['primero', 'segundo', 'tercero']
+  // const elementos = ['primero', 'segundo', 'tercero']
   
   //hay dos formas de crear Fragments
 
   // const fragment = new DocumentFragment()
-  const fragment = document.createDocumentFragment()
+  // const fragment = document.createDocumentFragment()
   
 //ahora usamos fragment para el forEach()
 
 
-elementos.forEach(item => {
-  const li = document.createElement('li')
+// elementos.forEach(item => {
+//   const li = document.createElement('li')
 
-  li.textContent = item
+//   li.textContent = item
 
-  fragment.appendChild(li)
+//   fragment.appendChild(li)
+
+// })
+
+//recién acá renderizamos 
+// lista.appendChild(fragment)
+
+
+
+//esto se hace con createElement
+
+// const lista = document.getElementById('lista')
+
+const arrayList = [1,2,3,4,5,6]
+
+// const fragment = document.createDocumentFragment()
+
+// arrayList.forEach(item => {
+//   const li = document.createElement('li')
+
+//   li.classList.add('list')
+
+//   const b = document.createElement('b')
+
+//   b.textContent = "Nombre: "
+
+//   li.appendChild(b)
+
+//   const span = document.createElement('span')
+
+//   span.classList.add('text-danger')
+//   span.textContent = item
+//   li.appendChild(span)
+
+//   fragment.appendChild(li)
+
+// })
+
+// lista.appendChild(fragment)
+
+
+//ahora usamos innerHTML
+
+// let fragment = ""
+
+// arrayList.forEach(item => {
+//   fragment += `
+//     <li class="list">
+//       <b>Nombre: </b> <span class="text-danger">${item}</span>
+//     </li>
+//   `
+// })
+
+// lista.innerHTML = fragment
+
+
+//el tercer método es el que hay que utilizar
+
+
+const template = document.getElementById('template')
+
+const fragment = document.createDocumentFragment()
+
+arrayList.forEach(item => {
+  template.querySelector('.list span').textContent = item
+
+  const clone = template.cloneNode(true)
+
+  fragment.appendChild(clone)
 
 })
 
-//recién acá renderizamos 
+
 lista.appendChild(fragment)
-  
-    
-    
-    
-    
-    
-
-
