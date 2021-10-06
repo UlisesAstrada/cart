@@ -61,3 +61,4 @@ const setCarrito = objeto => {
 
   console.log(producto)
 }
+
