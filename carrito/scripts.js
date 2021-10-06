@@ -58,7 +58,56 @@ const setCarrito = objeto => {
   }
 
   carrito[producto.id] = {...producto}
+  pintarCarrito()
+}
 
+const pintarCarrito = () => {
+  items.innerHTML = ''
+  Object.values(carrito).forEach(producto => {
+    templateCarrito.querySelector('th').textContent = producto.id
+    templateCarrito.querySelectorAll('td')[0].textContent = producto.title
+    templateCarrito.querySelectorAll('td')[1].textContent = producto.cantidad
+    templateCarrito.querySelector('.btn-info').dataset.id = producto.id
+    templateCarrito.querySelector('.btn-danger').dataset.id = producto.id
+    templateCarrito.querySelector('span').textContent = producto.cantidad * producto.precio
+
+    const clone = templateCarrito.cloneNode(true)
+    fragment.appendChild(clone)
+  })
+  items.appendChild(fragment)
+
+<<<<<<< HEAD
   console.log(producto)
 }
 
+=======
+  pintarFooter()
+}
+
+const pintarFooter = () => {
+  footer.innerHTML = ''
+  const cantidadTotalProductos = Object.values(carrito).reduce((acc, {cantidad}) => acc + cantidad, 0)
+  const precioTotal = Object.values(carrito).reduce((acc, {cantidad, precio}) => acc + cantidad * precio, 0)
+
+  if(Object.keys(carrito).length === 0) { 
+    footer.innerHTML = `<th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>`
+    return
+  }
+
+  templateFooter.querySelectorAll('td')[0].textContent = cantidadTotalProductos
+  templateFooter.querySelector('span').textContent = precioTotal
+
+  const clone = templateFooter.cloneNode(true)
+
+  fragment.appendChild(clone)
+
+  footer.appendChild(fragment)
+
+  const btnVaciar = document.getElementById('vaciar-carrito')
+  btnVaciar.addEventListener('click', () => {
+    carrito = {}
+    pintarCarrito()
+  })
+
+}
+>>>>>>> 25a2dac365051ed7a1c4df354893704fcc696acf
