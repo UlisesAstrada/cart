@@ -75,4 +75,33 @@ const pintarCarrito = () => {
     fragment.appendChild(clone)
   })
   items.appendChild(fragment)
+
+  pintarFooter()
+}
+
+const pintarFooter = () => {
+  footer.innerHTML = ''
+  const cantidadTotalProductos = Object.values(carrito).reduce((acc, {cantidad}) => acc + cantidad, 0)
+  const precioTotal = Object.values(carrito).reduce((acc, {cantidad, precio}) => acc + cantidad * precio, 0)
+
+  if(Object.keys(carrito).length === 0) { 
+    footer.innerHTML = `<th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>`
+    return
+  }
+
+  templateFooter.querySelectorAll('td')[0].textContent = cantidadTotalProductos
+  templateFooter.querySelector('span').textContent = precioTotal
+
+  const clone = templateFooter.cloneNode(true)
+
+  fragment.appendChild(clone)
+
+  footer.appendChild(fragment)
+
+  const btnVaciar = document.getElementById('vaciar-carrito')
+  btnVaciar.addEventListener('click', () => {
+    carrito = {}
+    pintarCarrito()
+  })
+
 }
