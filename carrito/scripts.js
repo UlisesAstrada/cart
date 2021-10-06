@@ -15,6 +15,10 @@ cards.addEventListener('click', e => {
   addCarrito(e)
 })
 
+items.addEventListener('click', e => {
+  btnAccion(e)
+})
+
 const fetchData = async () => {
   try {
     const res = await fetch('api.json')
@@ -76,11 +80,6 @@ const pintarCarrito = () => {
   })
   items.appendChild(fragment)
 
-<<<<<<< HEAD
-  console.log(producto)
-}
-
-=======
   pintarFooter()
 }
 
@@ -110,4 +109,22 @@ const pintarFooter = () => {
   })
 
 }
->>>>>>> 25a2dac365051ed7a1c4df354893704fcc696acf
+
+
+const btnAccion = e => {
+  if(e.target.classList.contains('btn-info')) {
+    carrito[e.target.dataset]
+    const producto = carrito[e.target.dataset.id]
+    producto.cantidad++
+    carrito[e.target.dataset.id] = {...producto}
+    pintarCarrito()
+  }
+
+  if(e.target.classList.contains('btn-danger')) {
+    carrito[e.target.dataset]
+    const producto = carrito[e.target.dataset.id]
+    producto.cantidad--
+    carrito[e.target.dataset.id] = {...producto}
+    pintarCarrito()
+  }
+}
