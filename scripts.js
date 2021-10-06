@@ -82,18 +82,71 @@
 
 //recién acá renderizamos 
 // lista.appendChild(fragment)
-  
-  
-//template vs innerHTML vs createElement
 
 
-//Esto es con createElement!
+
+//esto se hace con createElement
 
 // const lista = document.getElementById('lista')
- 
-// const items = [1,2,3,4,5]
-  
+
+// const arrayList = [1,2,3,4,5,6]
+
 // const fragment = document.createDocumentFragment()
+
+// arrayList.forEach(item => {
+//   const li = document.createElement('li')
+
+//   li.classList.add('list')
+
+//   const b = document.createElement('b')
+
+//   b.textContent = "Nombre: "
+
+//   li.appendChild(b)
+
+//   const span = document.createElement('span')
+
+//   span.classList.add('text-danger')
+//   span.textContent = item
+//   li.appendChild(span)
+
+//   fragment.appendChild(li)
+
+// })
+
+// lista.appendChild(fragment)
+
+
+//ahora usamos innerHTML
+
+// let fragment = ""
+
+// arrayList.forEach(item => {
+//   fragment += `
+//     <li class="list">
+//       <b>Nombre: </b> <span class="text-danger">${item}</span>
+//     </li>
+//   `
+// })
+
+// lista.innerHTML = fragment
+
+
+//el tercer método es el que hay que utilizar
+
+
+// const template = document.getElementById('template')
+
+// const fragment = document.createDocumentFragment()
+
+// arrayList.forEach(item => {
+//   template.querySelector('.list span').textContent = item
+
+//   const clone = template.cloneNode(true)
+
+//   fragment.appendChild(clone)
+
+// })
 
 // items.forEach( item => {
 //   const li = document.createElement('li')
@@ -133,26 +186,6 @@
 //   </li>` 
 // })
 
-// lista.innerHTML = fragment  
+// lista.appendChild(fragment)
 
 
-//ahora usamos template (esta es la opción correcta)
-
-const lista = document.querySelector('#lista')
-
-const arrayLista = [1,2,3,4,5,6]
-
-const template = document.querySelector('#template').content
-
-const fragment = document.createDocumentFragment()
-
-arrayLista.forEach(item => {
-  template.querySelector('.list span').textContent = item
-
-  const clone = template.cloneNode(true)
-
-  fragment.appendChild(clone)
-
-})
-
-lista.appendChild(fragment)
