@@ -3,36 +3,36 @@
     "precio": 500,
     "id": 1,
     "title": "Café",
-    "thumbnailUrl": "https://picsum.photos/id/0/600"
+    "thumbnailUrl": "https://static.dw.com/image/44469116_401.jpg"
   },
   {
     "precio": 300,
     "id": 2,
     "title": "Pizza",
-    "thumbnailUrl": "https://picsum.photos/id/10/600"
+    "thumbnailUrl": "https://www.lavanguardia.com/files/og_thumbnail/files/fp/uploads/2021/03/30/6063031b90a87.r_d.1083-871-0.jpeg"
   },
   {
     "precio": 100,
     "id": 3,
     "title": "Agua",
-    "thumbnailUrl": "https://picsum.photos/id/20/600"
+    "thumbnailUrl": "https://s1.eestatic.com/2019/03/28/ciencia/nutricion/alimentacion-agua-mitos_386722449_118991219_1706x960.jpg"
   },
   {
     "precio": 50,
     "id": 4,
     "title": "Sandía",
-    "thumbnailUrl": "https://picsum.photos/id/30/600"
+    "thumbnailUrl": "http://www.frutas-hortalizas.com/img/fruites_verdures/presentacio/30.jpg"
   },
   {
     "precio": 10,
     "id": 5,
     "title": "Mango",
-    "thumbnailUrl": "https://picsum.photos/id/40/600"
+    "thumbnailUrl": "https://storage.googleapis.com/portalfruticola/2019/12/51d959a1-mango-adobestock_178731548-e1576248947478.jpeg"
   },
   {
     "precio": 150,
     "id": 6,
     "title": "Chela",
-    "thumbnailUrl": "https://picsum.photos/id/50/600"
+    "thumbnailUrl": "https://conceptodefinicion.de/wp-content/uploads/2021/06/chela.jpg"
   }
 ]
