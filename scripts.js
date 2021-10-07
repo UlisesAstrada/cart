@@ -1,191 +1,130 @@
+const cards = document.getElementById('cards')
+const items = document.getElementById('items')
+const footer = document.getElementById('footer')
+const templateCard = document.getElementById('template-card').content
+const templateFooter = document.getElementById('template-footer').content
+const templateCarrito = document.getElementById('template-carrito').content
+const fragment = document.createDocumentFragment()
+let carrito = {}
 
-//querySelector solamente selecciona el primer selector que coincida con el parámetro
-// console.log(document.querySelector('h3'));
+document.addEventListener('DOMContentLoaded', () => {
+  fetchData()
+})
 
-//querySelector acepta class pero hay que poner los puntos de clase adentro de las comillas
-// console.log(document.querySelector('.h3-danger'));
+cards.addEventListener('click', e => {
+  addCarrito(e)
+})
 
-//querySelector acepta id también, anteponiendo el numeral
-// console.log(document.querySelector("#identificado"));
+items.addEventListener('click', e => {
+  btnAccion(e)
+})
 
-//document.getElementById solamente selecciona elementos por ID, sin necesidad de utilizar el #
-// console.log(document.getElementById("identificado"));
+const fetchData = async () => {
+  try {
+    const res = await fetch('api.json')
+    const data = await res.json()
+    pintarCards(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-//document.querySelectorAll selecciona todos los elementos que cumplan con las especificaciones dentro de los paréntesis
-// console.log(document.querySelectorAll(".h3-danger"));
-// console.log(document.querySelectorAll("h3"));
+const pintarCards = data => {
+  data.forEach(producto => {
+    templateCard.querySelector('h5').textContent = producto.title
+    templateCard.querySelector('p').textContent = producto.precio
+    templateCard.querySelector('img').setAttribute("src", producto.thumbnailUrl)
+    templateCard.querySelector('.btn-dark').dataset.id = producto.id
+    const clone = templateCard.cloneNode(true)
 
+    fragment.appendChild(clone)
+  });
+  cards.appendChild(fragment)
+}
 
-// const primerH3 = document.getElementById("primer-h3")
+const addCarrito = e => {
+  if(e.target.classList.contains('btn-dark')) {
+    setCarrito(e.target.parentElement)
+  }
+  e.stopPropagation()
+}
 
-//Usando textContent no podemos agregar etiquetas de HTML
-// primerH3.textContent = "Hola gente del Mundo, modificado desde JS"
-
-//Usando innerHTML podemos agregar etiquetas
-// primerH3.innerHTML = "<b><i>Texto con innerHTML, desde JS<i/><b/>"
-
-//Podemos añadir clases a HTML desde JS
-//primerH3.classList.add("h3-danger")
-
-
-// const lista = document.getElementById("lista")
-
-//creando <li>
-// const li = document.createElement("li")
-
-// li.textContent = 'Primer elemento'
-
-//añadiendo el li a la lista
-// lista.appendChild(li)
-
-
-//renderizar elementos de un array como li usando JS!
-
-//usando textContent con forEach
-
-// elementos.forEach(item => {
-  //   console.log(item);
-  //   const li = document.createElement('li')
-  //   li.textContent = item;
-  //   lista.appendChild(li)
-  // })
+const setCarrito = objeto => {
+  const producto = {
+    id: objeto.querySelector('.btn-dark').dataset.id,
+    title: objeto.querySelector('h5').textContent,
+    precio: objeto.querySelector('p').textContent,
+    cantidad: 1
+  }
   
-  // //usando innerHTML con forEach
-  // elementos.forEach(item => {
-    //   lista.innerHTML += `<li>${item}</li>`
-    // })
-    
-    //Los métodos anteriores tienen un problema, el Reflow, esto es que todos los componentes de la página se tienen que renderizar nuevamente desde 0 cada vez que hay un cambio
-    
-    //Fragment soluciona el Reflow
-    
-  // const lista = document.getElementById('lista')
-  
-  // const elementos = ['primero', 'segundo', 'tercero']
-  
-  //hay dos formas de crear Fragments
+  if(carrito.hasOwnProperty(producto.id)) {
+    producto.cantidad = carrito[producto.id].cantidad + 1
+  }
 
-  // const fragment = new DocumentFragment()
-  // const fragment = document.createDocumentFragment()
-  
-//ahora usamos fragment para el forEach()
+  carrito[producto.id] = {...producto}
+  pintarCarrito()
+}
 
+const pintarCarrito = () => {
+  items.innerHTML = ''
+  Object.values(carrito).forEach(producto => {
+    templateCarrito.querySelector('th').textContent = producto.id
+    templateCarrito.querySelectorAll('td')[0].textContent = producto.title
+    templateCarrito.querySelectorAll('td')[1].textContent = producto.cantidad
+    templateCarrito.querySelector('.btn-info').dataset.id = producto.id
+    templateCarrito.querySelector('.btn-danger').dataset.id = producto.id
+    templateCarrito.querySelector('span').textContent = producto.cantidad * producto.precio
 
-// elementos.forEach(item => {
-//   const li = document.createElement('li')
+    const clone = templateCarrito.cloneNode(true)
+    fragment.appendChild(clone)
+  })
+  items.appendChild(fragment)
 
-//   li.textContent = item
+  pintarFooter()
+}
 
-//   fragment.appendChild(li)
+const pintarFooter = () => {
+  footer.innerHTML = ''
+  const cantidadTotalProductos = Object.values(carrito).reduce((acc, {cantidad}) => acc + cantidad, 0)
+  const precioTotal = Object.values(carrito).reduce((acc, {cantidad, precio}) => acc + cantidad * precio, 0)
 
-// })
+  if(Object.keys(carrito).length === 0) { 
+    footer.innerHTML = `<th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>`
+    return
+  }
 
-//recién acá renderizamos 
-// lista.appendChild(fragment)
+  templateFooter.querySelectorAll('td')[0].textContent = cantidadTotalProductos
+  templateFooter.querySelector('span').textContent = precioTotal
 
+  const clone = templateFooter.cloneNode(true)
 
+  fragment.appendChild(clone)
 
-//esto se hace con createElement
+  footer.appendChild(fragment)
 
-// const lista = document.getElementById('lista')
+  const btnVaciar = document.getElementById('vaciar-carrito')
+  btnVaciar.addEventListener('click', () => {
+    carrito = {}
+    pintarCarrito()
+  })
 
-// const arrayList = [1,2,3,4,5,6]
-
-// const fragment = document.createDocumentFragment()
-
-// arrayList.forEach(item => {
-//   const li = document.createElement('li')
-
-//   li.classList.add('list')
-
-//   const b = document.createElement('b')
-
-//   b.textContent = "Nombre: "
-
-//   li.appendChild(b)
-
-//   const span = document.createElement('span')
-
-//   span.classList.add('text-danger')
-//   span.textContent = item
-//   li.appendChild(span)
-
-//   fragment.appendChild(li)
-
-// })
-
-// lista.appendChild(fragment)
+}
 
 
-//ahora usamos innerHTML
+const btnAccion = e => {
+  if(e.target.classList.contains('btn-info')) {
+    carrito[e.target.dataset]
+    const producto = carrito[e.target.dataset.id]
+    producto.cantidad++
+    carrito[e.target.dataset.id] = {...producto}
+    pintarCarrito()
+  }
 
-// let fragment = ""
-
-// arrayList.forEach(item => {
-//   fragment += `
-//     <li class="list">
-//       <b>Nombre: </b> <span class="text-danger">${item}</span>
-//     </li>
-//   `
-// })
-
-// lista.innerHTML = fragment
-
-
-//el tercer método es el que hay que utilizar
-
-
-// const template = document.getElementById('template')
-
-// const fragment = document.createDocumentFragment()
-
-// arrayList.forEach(item => {
-//   template.querySelector('.list span').textContent = item
-
-//   const clone = template.cloneNode(true)
-
-//   fragment.appendChild(clone)
-
-// })
-
-// items.forEach( item => {
-//   const li = document.createElement('li')
-//   li.classList.add('list')
-  
-//   const b = document.createElement('b')
-//   b.textContent = 'Nombre: '
-//   li.appendChild(b)
-
-//   const span = document.createElement('span')
-//   span.classList.add('text-danger')
-//   span.textContent = item
-//   li.appendChild(span)
-
-//   fragment.appendChild(li)
-// })
-
-// lista.appendChild(fragment)
-
-//Da este resultado
-
-// <li class="list">
-//   <b>Nombre: </b> <span class="text-danger">description...</span>
-// </li>
-
-
-//Mismo resultado con innerHTML
-// const lista = document.getElementById('lista')
-// const items = [1,2,3,4,5,6]
-
-// let fragment = ""
-
-// items.forEach(item => {
-//   fragment += `
-//   <li class="list">
-//     <b>Nombre: </b> <span class="text-danger">${item}</span>
-//   </li>` 
-// })
-
-// lista.appendChild(fragment)
-
-
+  if(e.target.classList.contains('btn-danger')) {
+    carrito[e.target.dataset]
+    const producto = carrito[e.target.dataset.id]
+    producto.cantidad--
+    carrito[e.target.dataset.id] = {...producto}
+    pintarCarrito()
+  }
+}
