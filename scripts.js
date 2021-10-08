@@ -113,7 +113,6 @@ const pintarFooter = () => {
 
 const btnAccion = e => {
   if(e.target.classList.contains('btn-info')) {
-    carrito[e.target.dataset]
     const producto = carrito[e.target.dataset.id]
     producto.cantidad++
     carrito[e.target.dataset.id] = {...producto}
@@ -121,10 +120,15 @@ const btnAccion = e => {
   }
 
   if(e.target.classList.contains('btn-danger')) {
-    carrito[e.target.dataset]
     const producto = carrito[e.target.dataset.id]
     producto.cantidad--
-    carrito[e.target.dataset.id] = {...producto}
+    if(producto.cantidad === 0) {
+      delete carrito[e.target.dataset.id]
+      pintarCarrito()
+    }
     pintarCarrito()
   }
+
+
+  e.stopPropagation() 
 }
