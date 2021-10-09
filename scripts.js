@@ -7,6 +7,8 @@ const templateCarrito = document.getElementById('template-carrito').content
 const fragment = document.createDocumentFragment()
 let carrito = {}
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
   fetchData()
   if(localStorage.getItem('carrito')) {
@@ -82,6 +84,7 @@ const pintarCarrito = () => {
     const clone = templateCarrito.cloneNode(true)
     fragment.appendChild(clone)
   })
+
   items.appendChild(fragment)
 
   pintarFooter()
@@ -134,7 +137,6 @@ const btnAccion = e => {
     }
     pintarCarrito()
   }
-
 
   e.stopPropagation() 
 }
